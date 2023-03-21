@@ -55,7 +55,7 @@ public class SiteUser {
 
     @Getter
     @Setter
-    @Size(min=7, max=128)
+    @Size(min=3, max=50)
     private String passwordConfirmation;
 
     @Getter

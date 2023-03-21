@@ -48,7 +48,7 @@ public class SecurityController {
 	private UserService service;
     
     @PostMapping("/process_register")
-	public String processRegister(@RequestBody SiteUser user, HttpServletRequest request) 
+	public String processRegister(@RequestBody @Validated SiteUser user, HttpServletRequest request) 
 			throws UnsupportedEncodingException, MessagingException {
 				
 		service.register(user, getSiteURL(request));	
