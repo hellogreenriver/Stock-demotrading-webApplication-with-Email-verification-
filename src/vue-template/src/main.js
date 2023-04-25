@@ -9,7 +9,7 @@ import HighchartsVue from "highcharts-vue";
 import   {VueReCaptcha } from 'vue-recaptcha-v3';
 
 Vue.use(VueReCaptcha, {
-  siteKey: '6Lf99YglAAAAAIXouPt7Byf04f6hL8ecp1RvDSSY',
+  siteKey: '6Le8l4klAAAAAOdoBCTH34mMxenwSD_op3fIOJs-',
   loaderOptions: {
     autoHideBadge: true
   }

@@ -43,7 +43,7 @@ public class UserService implements IUserService {
     public void register( SiteUser user, String siteURL) 
 			throws UnsupportedEncodingException, MessagingException {
 		
-		String secret = "6Lf99YglAAAAAEjxw41zz5-auDwEKNHukhhfY9Zd";		
+		String secret = "6Le8l4klAAAAAPFRx1HP9dEVdINv3m62mepxVB3R";		
 			
 		if(user.getPassword().equals(user.getPasswordConfirmation())){
 			String url = "https://www.google.com/recaptcha/api/siteverify";
