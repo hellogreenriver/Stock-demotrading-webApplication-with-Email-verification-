@@ -55,7 +55,7 @@ public class UserService implements IUserService {
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 			RestTemplate restTemplate = new RestTemplate();
 			RecapchaResult result = restTemplate.exchange(url, HttpMethod.POST, entity, RecapchaResult.class).getBody();
-			if (result.isSuccess()) {
+			System.out.println("result" + result.toString());
 				if (result.isSuccess()) {
 					if ( 0.5 <= result.getScore()) {
 						String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -75,7 +75,7 @@ public class UserService implements IUserService {
 				System.out.println("google recapcha failed");
 			}
 			
-		}
+		
 		}
 		else{
 			System.out.println("Register failed");
