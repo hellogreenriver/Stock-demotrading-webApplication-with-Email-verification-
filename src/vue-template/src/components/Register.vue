@@ -88,6 +88,7 @@ export default {
             snackbar: false,
             username: '',
             email: '',
+            token:'',
             password: false,
             passwordConfirmation: false,
             errors: '',
@@ -102,17 +103,21 @@ export default {
     },
     mounted() {
         this.$refs.form.resetValidation()
+        const recaptcha = this.$recaptchaInstance
+        recaptcha.showBadge()
     },
     methods: {
-        doRegister() {
+       async doRegister() {
             this.isLoading = 'red';
-            
+            await this.$recaptchaLoaded();
+            const RecaptchaResponseToken = await this.$recaptcha('register');
+            this.token = RecaptchaResponseToken
             if(this.$refs.form.validate()){
                 axios
-
                 .post("security/process_register", {
                     username: this.username,
                     email: this.email,
+                    recaptchaResponseToken: this.token,
                     password: this.password,
                     passwordConfirmation: this.passwordConfirmation
                 })

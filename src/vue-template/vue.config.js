@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-
+const webpack = require('webpack');
 module.exports ={
   transpileDependencies: true,
   lintOnSave: false,
@@ -8,6 +8,11 @@ module.exports ={
     'vuetify'
   ],
   configureWebpack: {
+    plugins: [
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1,
+      }),
+    ],
     resolve: {
       fallback: {
         "zlib": require.resolve("browserify-zlib"),

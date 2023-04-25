@@ -67,6 +67,7 @@ export default {
         return {
             username: '',
             password: '',
+            token: '',
             errors: {},
             isLoading: false,
             idErrors:{},
@@ -75,13 +76,22 @@ export default {
     computed:{
       ...mapState(['user_id']),
     },
+    mounted() {
+        this.$refs.form.resetValidation()
+        const recaptcha = this.$recaptchaInstance
+        recaptcha.showBadge()
+    },
     methods: {
-        login() {
+      async  login() {
             this.isLoading = 'red';
+            await this.$recaptchaLoaded();
+            const RecaptchaResponseToken = await this.$recaptcha('login');
+            this.token = RecaptchaResponseToken
                 axios
                     .post('/api/login', {
                         username: this.username,
-                        password: this.password
+                        password: this.password,
+                        recaptchaResponseToken: this.token,
                     })
                     .then(response => {
                         localStorage.setItem('token', response.headers['x-auth-token'])

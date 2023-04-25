@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -96,6 +97,10 @@ public class SiteUser {
     @Setter
     private BigDecimal account;
 
+    @Getter
+    @Setter
+    @Column(length = 2000)
+    private String recaptchaResponseToken;
    
  
     

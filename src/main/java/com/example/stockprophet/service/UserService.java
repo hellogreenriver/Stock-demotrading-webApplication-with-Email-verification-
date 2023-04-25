@@ -9,14 +9,22 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
+import com.example.stockprophet.model.RecapchaResult;
 import com.example.stockprophet.model.SiteUser;
 import com.example.stockprophet.repository.SiteUserRepository;
 
@@ -34,17 +42,40 @@ public class UserService implements IUserService {
     //Registration before e-mail verified
     public void register( SiteUser user, String siteURL) 
 			throws UnsupportedEncodingException, MessagingException {
+		
+		String secret = "6Lf99YglAAAAAEjxw41zz5-auDwEKNHukhhfY9Zd";		
+			
 		if(user.getPassword().equals(user.getPasswordConfirmation())){
-			String encodedPassword = passwordEncoder.encode(user.getPassword());
-		    user.setPassword(encodedPassword);
-		    user.setUsername(user.getUsername());
-		    String randomCode = UUID.randomUUID().toString();
-		    user.setVerificationToken(randomCode);
-		    user.setEnabled(false);
-		
-		    userRepo.save(user);
-		
-		    sendVerificationEmail(user, siteURL);
+			String url = "https://www.google.com/recaptcha/api/siteverify";
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+			map.add("secret", secret);
+			map.add("response", user.getRecaptchaResponseToken());
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+			RestTemplate restTemplate = new RestTemplate();
+			RecapchaResult result = restTemplate.exchange(url, HttpMethod.POST, entity, RecapchaResult.class).getBody();
+			if (result.isSuccess()) {
+				if (result.isSuccess()) {
+					if ( 0.5 <= result.getScore()) {
+						String encodedPassword = passwordEncoder.encode(user.getPassword());
+						user.setPassword(encodedPassword);
+						user.setUsername(user.getUsername());
+						String randomCode = UUID.randomUUID().toString();
+						user.setVerificationToken(randomCode);
+						user.setEnabled(false);
+						userRepo.save(user);
+						sendVerificationEmail(user, siteURL);
+					} else {
+						System.out.println("bot");
+					}
+				
+				
+			} else {
+				System.out.println("google recapcha failed");
+			}
+			
+		}
 		}
 		else{
 			System.out.println("Register failed");
