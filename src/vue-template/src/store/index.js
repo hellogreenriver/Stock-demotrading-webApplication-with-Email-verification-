@@ -11,7 +11,7 @@ export default new Vuex.Store({
     dialog: false,
     user_id:null,
     accountValue: "You are not logged in",
-    symbol: '^GSPC',
+    symbol: 'AAPL',
     numberOfShares: null,
     price: null,
     stockData: null,
