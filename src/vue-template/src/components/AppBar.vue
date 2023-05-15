@@ -25,12 +25,12 @@
           <v-list-item-title>Chart</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/account">
+      <v-list-item >
         <v-list-item-icon>
           <v-icon>{{ mdi-account }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Account</v-list-item-title>
+          <v-list-item-title @click="routerPush()">Account</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <div v-if="isLogin">
@@ -234,6 +234,14 @@ export default {
             this.snackbar =true
             console.log('appbar error' + error)
            })
+    },
+    routerPush(){
+      if(localStorage.getItem('tokenVerified')){
+        this.$router.push('/account')
+      }
+      else{
+        this.$router.push('/login')
+      }
     },
     
     ...mapMutations({
