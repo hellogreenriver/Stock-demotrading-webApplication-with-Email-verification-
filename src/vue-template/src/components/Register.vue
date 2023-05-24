@@ -95,7 +95,7 @@ export default {
             rules: {
                 required: value => !!value || 'Please input',
                 email: value =>  !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)|| 'Email address format is incorrect',
-                minmax: value => (value && value.length >= 3 && value.length <= 50) || 'Please input between 3 and 50 characters',
+                minmax: value => (value && value.length > 3 && value.length < 50) || 'Please input between 3 and 50 characters',
                 passwordMinmax: value => (value && value.length >= 7 && value.length <= 128) || 'Please input between 7 and 128 characters',
                 comformPassword: function(){if(this.passwordConfirmation === this.password){return true} else {return 'Your comform password is incorrect'} } ,
       },
@@ -141,11 +141,7 @@ export default {
             
            
         },
-        comformPassword: function(){
-            if(this.passwordConfirmation === this.password)
-            {return true
-            } else {
-            return 'Your comform password is incorrect'} } ,
+        
         goLogin(){
             this.snackbar = false;
             setTimeout(() => {

@@ -235,8 +235,9 @@ export default {
             console.log('appbar error' + error)
            })
     },
-    routerPush(){
-      if(localStorage.getItem('tokenVerified')){
+    async routerPush(){
+      let tokenCheck = await localStorage.getItem('tokenVerified')
+      if(tokenCheck){
         this.$router.push('/account')
       }
       else{

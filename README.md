@@ -8,6 +8,7 @@ This WebApplication can log in, register user, view stock charts, and demoTradin
 ･The stock chart information is obtained from YahooFinanceAPI.
 ･The stock demo trading calculations are calculated with Spring Boot.
 ･I used Google recaptcha for preventing spam
+If you dont want to use Email verification, you can log in with username:admin, Password: password
 # Author
 Tomohiro
 
