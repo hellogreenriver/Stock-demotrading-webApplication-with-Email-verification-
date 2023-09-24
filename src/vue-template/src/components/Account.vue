@@ -131,6 +131,9 @@
       },
       mounted() {
         this.loginCheck()
+        const path = this.$route.path
+        console.log("path"+path)
+        console.log("type"+typeof(path))
       },   
       methods:{
         buy(item){

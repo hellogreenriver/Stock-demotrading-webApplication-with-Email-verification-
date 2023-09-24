@@ -17,7 +17,7 @@ Vue.use(VueReCaptcha, {
 Stock(Highcharts);
 Vue.use(HighchartsVue);
 Vue.config.productionTip = false
-Vue.config.devtools = false
+Vue.config.devtools = true
 new Vue({
   router,
   store,

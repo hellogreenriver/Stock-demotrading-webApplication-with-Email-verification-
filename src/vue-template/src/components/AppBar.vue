@@ -19,7 +19,7 @@
       <v-list dense nav>
       <v-list-item to="/">
         <v-list-item-icon>
-          <v-icon>{{ mdi-chart-line }}</v-icon>
+          <v-icon> mdi-chart-line </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>Chart</v-list-item-title>
@@ -27,7 +27,7 @@
       </v-list-item>
       <v-list-item >
         <v-list-item-icon>
-          <v-icon>{{ mdi-account }}</v-icon>
+          <v-icon> mdi-account </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title @click="routerPush()">Account</v-list-item-title>
@@ -36,7 +36,7 @@
       <div v-if="isLogin">
       <v-list-item  >
         <v-list-item-icon>
-          <v-icon>{{ mdi-logout }}</v-icon>
+          <v-icon> mdi-logout</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title @click="logout()">Logout</v-list-item-title>
@@ -223,9 +223,17 @@ export default {
         
     searchSymbol(){
       
+      const path = this.$route.path
+      if(path === "/account"){
+        localStorage.setItem('symbol', this.search)
+        this.$router.push("/")
+      }
+      else{
+
       axios
            .get('api/stock/' + this.search)
            .then(response => {
+            
             
             localStorage.setItem('symbol', this.search)
             this.$router.go({path: this.$router.currentRoute.path, force: true})
@@ -234,6 +242,7 @@ export default {
             this.snackbar =true
             console.log('appbar error' + error)
            })
+          }
     },
     async routerPush(){
       let tokenCheck = await localStorage.getItem('tokenVerified')

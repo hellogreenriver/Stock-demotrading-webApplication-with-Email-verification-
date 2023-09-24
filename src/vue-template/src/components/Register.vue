@@ -112,7 +112,7 @@ export default {
             await this.$recaptchaLoaded();
             const RecaptchaResponseToken = await this.$recaptcha('register');
             this.token = RecaptchaResponseToken
-            if(this.$refs.form.validate()){
+             if(this.$refs.form.validate()){
                 axios
                 .post("security/process_register", {
                     username: this.username,
@@ -137,11 +137,13 @@ export default {
 
                 })
                 }
+                setTimeout(stopLoading(),5000)
                 
-            
            
         },
-        
+        stopLoading(){
+          this.isLoading = false
+        },
         goLogin(){
             this.snackbar = false;
             setTimeout(() => {

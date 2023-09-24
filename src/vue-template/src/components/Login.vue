@@ -108,7 +108,12 @@ export default {
                     this.isLoading = false;
                     
                 })
+                
+                setTimeout(stopLoading(),5000)
         },
+        stopLoading(){
+          this.isLoading = false
+        }
        
 
         
